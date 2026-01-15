@@ -4,128 +4,300 @@
   <meta charset="UTF-8" />
   <title>Akansh Sharma | Software Engineer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Modern, minimal single‑file portfolio -->
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      color: #111827;
-      background: #0b1120;
+    :root {
+      --bg: #020617;
+      --bg-elevated: #020617;
+      --border-subtle: #111827;
+      --accent: #0ea5e9;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --accent-green: #22c55e;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+      --card-radius: 1rem;
+      --shadow-soft: 0 14px 40px rgba(15, 23, 42, 0.8);
     }
-    a { color: #0ea5e9; text-decoration: none; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.7;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, #1e293b 0, #020617 40%),
+        radial-gradient(circle at bottom right, #020617 0, #020617 50%);
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    header {
-      padding: 3rem 1.5rem 1rem;
-      background: radial-gradient(circle at top left, #1e293b, #020617);
-      color: #e5e7eb;
-    }
-    .container { max-width: 960px; margin: 0 auto; }
+    /* Top navigation */
+    .shell { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
 
-    .hero {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.8));
+      border-bottom: 1px solid var(--border-subtle);
+      margin: -1.5rem -1.25rem 1.5rem;
+      padding: 0.75rem 1.25rem;
     }
-    .hero-main h1 { font-size: 2.5rem; font-weight: 700; }
-    .hero-main h2 { font-size: 1.1rem; font-weight: 500; color: #9ca3af; margin-top: 0.25rem; }
-    .hero-main p { margin-top: 0.75rem; max-width: 34rem; color: #e5e7eb; }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, var(--accent), #1e293b);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0b1120;
+      box-shadow: 0 10px 25px rgba(8, 47, 73, 0.9);
+    }
+    .nav-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-soft);
+    }
+    .nav-links a {
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.25rem;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.15s ease;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero */
+    header {
+      padding-top: 1.25rem;
+      padding-bottom: 2.5rem;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.6fr);
+      gap: 2.25rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-main h1 {
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .hero-main h2 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+    }
+    .hero-main p {
+      margin-top: 0.85rem;
+      max-width: 36rem;
+      color: var(--text-main);
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+    .hero-pill {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(15, 23, 42, 0.7);
+    }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
+      gap: 0.9rem;
+      margin-top: 1.3rem;
     }
     .btn {
-      padding: 0.6rem 1.1rem;
+      padding: 0.65rem 1.25rem;
       border-radius: 999px;
-      border: 1px solid #38bdf8;
+      border: 1px solid transparent;
       font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+      text-decoration: none;
     }
     .btn-primary {
-      background: #0ea5e9;
+      background: radial-gradient(circle at top left, var(--accent), var(--accent-green));
       color: #020617;
-      border-color: #0ea5e9;
       font-weight: 600;
+      box-shadow: 0 12px 26px rgba(56, 189, 248, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 34px rgba(56, 189, 248, 0.5);
     }
     .btn-secondary {
-      background: transparent;
-      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      background: rgba(15, 23, 42, 0.98);
+      border-color: var(--accent);
     }
 
-    /* Profile image */
-    .hero-profile {
+    /* Hero profile card */
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    @media (max-width: 768px) {
+      .hero-side {
+        align-items: center;
+      }
+    }
+    .hero-profile-card {
+      padding: 1.1rem 1.25rem;
+      border-radius: 1.1rem;
+      border: 1px solid rgba(15, 23, 42, 1);
+      background:
+        radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 55%),
+        radial-gradient(circle at bottom, rgba(30, 64, 175, 0.18), transparent 55%),
+        #020617;
+      box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.7rem;
+      min-width: 230px;
     }
     .hero-profile-img {
-  width: 96px;          /* increase if original photo is large */
-  height: 96px;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 2px solid #38bdf8;
-  background: #020617;
-}
-
-.hero-profile-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;      /* keep this */
-  image-rendering: auto;  /* ensure browser uses normal smoothing */
-}
-
+      width: 132px;
+      height: 132px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid rgba(56, 189, 248, 0.85);
+      box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.95);
+      background: #020617;
+    }
+    .hero-profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-profile-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
     .hero-profile-caption {
-      font-size: 0.85rem;
-      color: #9ca3af;
+      font-size: 0.82rem;
+      color: var(--text-muted);
       text-align: center;
     }
-
-    main {
-      padding: 2.5rem 1.5rem 3rem;
-      background: #020617;
-      color: #e5e7eb;
-    }
-    section { margin-bottom: 2.5rem; }
-    section h3 {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #1f2937;
-      padding-bottom: 0.5rem;
+    .hero-profile-meta {
+      font-size: 0.8rem;
+      color: var(--text-soft);
     }
 
-    .grid { display: grid; gap: 1.25rem; }
+    /* Sections */
+    main { margin-top: 0.5rem; }
 
-    @media (min-width: 768px) {
-      .hero {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .hero-main { flex: 2; }
-      .hero-side {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 1rem;
-        text-align: right;
-      }
-      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    section { margin-bottom: 2.75rem; }
+
+    section header {
+      padding: 0;
+      margin-bottom: 1.1rem;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.35rem;
+    }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .section-body { font-size: 0.9rem; color: var(--text-muted); }
+
+    .grid { display: grid; gap: 1.4rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 800px) {
+      .grid-2 { grid-template-columns: minmax(0, 1fr); }
     }
 
     .card {
-      padding: 1rem;
-      border-radius: 0.75rem;
-      border: 1px solid #111827;
-      background: #020617;
-      box-shadow: 0 1px 2px rgba(15,23,42,0.6);
+      padding: 1.15rem 1.2rem;
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.96);
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.9);
     }
-    .card h4 { font-size: 1rem; margin-bottom: 0.4rem; }
-    .card span.meta { font-size: 0.8rem; color: #9ca3af; }
-    .card p { font-size: 0.9rem; margin-top: 0.5rem; color: #d1d5db; }
+    .card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+      color: var(--text-main);
+    }
+    .card span.meta {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .card p { font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-muted); }
 
     .tag-list {
       display: flex;
@@ -135,100 +307,123 @@
     }
     .tag {
       font-size: 0.75rem;
-      padding: 0.2rem 0.55rem;
+      padding: 0.2rem 0.6rem;
       border-radius: 999px;
       border: 1px solid #1f2937;
-      color: #9ca3af;
-      background: #020617;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.9);
     }
 
-    .link-row {
+    ul.experience-list {
       margin-top: 0.6rem;
-      font-size: 0.85rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
+    ul.experience-list li { margin-bottom: 0.35rem; }
 
-    .muted { color: #9ca3af; font-size: 0.9rem; }
+    .muted { color: var(--text-muted); font-size: 0.9rem; }
 
     footer {
-      padding: 1.5rem;
-      text-align: center;
+      margin-top: 1rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--border-subtle);
       font-size: 0.8rem;
-      color: #6b7280;
-      background: #020617;
-      border-top: 1px solid #111827;
+      color: var(--text-soft);
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container hero">
-      <div class="hero-main">
-        <h1>Akansh Sharma</h1>
-        <h2>Software Engineer · ML &amp; Cloud</h2>
-        <p>
-          Software engineer with experience deploying ML workloads on AWS and Azure, building
-          serverless inference pipelines, and optimizing production infrastructure for reliability
-          and cost.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://github.com/akansh194" target="_blank" rel="noreferrer">
-            View GitHub
-          </a>
-          <a class="btn btn-secondary" href="https://www.linkedin.com/in/akansh-sharma-6518221aa/" target="_blank" rel="noreferrer">
-            Connect on LinkedIn
-          </a>
-          <a class="btn btn-secondary" href="Resume.pdf" target="_blank" rel="noreferrer">
-            Download Resume
-          </a>
-        </div>
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">A</div>
+        <div class="nav-name">Akansh Sharma · Software Engineer</div>
       </div>
-
-      <div class="hero-side">
-        <div class="hero-profile">
-          <div class="hero-profile-img">
-            <!-- your picture -->
-            <img src="b.jpeg" alt="Portrait of Akansh Sharma" />
-          </div>
-          <div class="hero-profile-caption">
-            Open to full-time Software / ML Engineer roles
-          </div>
-        </div>
-        <div>
-          <p class="muted">Hammond, Indiana</p>
-          <p class="muted">📧 <a href="mailto:sharm995@pnw.edu">sharm995@pnw.edu</a></p>
-        </div>
-      </div>
+      <nav class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <div class="container">
+  <div class="shell">
+    <header>
+      <div class="hero">
+        <div class="hero-main">
+          <h1>Akansh Sharma</h1>
+          <h2>Software Engineer · ML &amp; Cloud</h2>
+          <p>
+            Software engineer deploying ML workloads on AWS and Azure, building serverless inference
+            pipelines, and optimizing production infrastructure for reliability and cost.
+          </p>
+          <div class="hero-meta-row">
+            <span class="hero-pill">M.S. Computer Science · Purdue University Northwest</span>
+            <span class="hero-pill">Based in Hammond, Indiana</span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/akansh194" target="_blank" rel="noreferrer">
+              <span>View GitHub</span>
+            </a>
+            <a class="btn btn-secondary" href="https://linkedin.com/in/sharma-akansh" target="_blank" rel="noreferrer">
+              <span>Connect on LinkedIn</span>
+            </a>
+            <a class="btn btn-secondary" href="Resume.pdf" target="_blank" rel="noreferrer">
+              <span>Download Resume</span>
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="hero-profile-card">
+            <div class="hero-profile-img">
+              <img src="a.jpeg" alt="Portrait of Akansh Sharma" />
+            </div>
+            <div class="hero-profile-name">Akansh Sharma</div>
+            <div class="hero-profile-caption">
+              Open to full-time Software / ML Engineer roles.
+            </div>
+            <div class="hero-profile-meta">
+              Hammond, Indiana · <a href="mailto:sharm995@pnw.edu">sharm995@pnw.edu</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main>
       <!-- About -->
       <section id="about">
-        <h3>About</h3>
-        <p class="muted">
+        <header>
+          <div class="section-label">About</div>
+          <div class="section-title">Who Akansh is</div>
+        </header>
+        <div class="section-body">
           Currently pursuing an M.S. in Computer Science at Purdue University Northwest, focusing on
-          retrieval-augmented generation, AI security, and cloud-native systems.
-        </p>
+          retrieval-augmented generation, AI security, and cloud-native systems. Akansh combines research-driven work with hands-on experience operating production infrastructure and ML workloads. [file:1]
+        </div>
       </section>
 
       <!-- Projects -->
       <section id="projects">
-        <h3>Selected Projects</h3>
+        <header>
+          <div class="section-label">Projects</div>
+          <div class="section-title">Selected work</div>
+        </header>
         <div class="grid grid-2">
           <article class="card">
             <h4>End-to-End RAG Knowledge Base Platform</h4>
             <span class="meta">Azure · Python · FastAPI · Azure OpenAI</span>
             <p>
               Designed and implemented a retrieval-augmented generation platform using Azure OpenAI, Azure AI Search,
-              and Blob Storage for multi-document knowledge management and chat-based querying.
+              and Blob Storage for multi-document knowledge management and chat-based querying. [file:1]
             </p>
             <p>
-              Built a FastAPI backend orchestrating embeddings, hybrid retrieval, and Azure OpenAI, with strict
-              answer-from-context behavior and citation-aware responses.
+              Built a FastAPI backend orchestrating embeddings, hybrid retrieval, and Azure OpenAI, enforcing
+              answer-from-context behavior and citation-aware responses for production readiness. [file:1]
             </p>
             <div class="tag-list">
               <span class="tag">RAG</span>
@@ -236,11 +431,6 @@
               <span class="tag">FastAPI</span>
               <span class="tag">LLMs</span>
             </div>
-            <!-- Optional: add repo link
-            <div class="link-row">
-              <a href="YOUR_RAG_REPO_URL" target="_blank" rel="noreferrer">View code →</a>
-            </div>
-            -->
           </article>
 
           <article class="card">
@@ -248,22 +438,17 @@
             <span class="meta">PyTorch · Hugging Face · NLP Security</span>
             <p>
               Implemented and evaluated backdoor attacks on Transformer-based text classifiers, injecting poisoned
-              samples with trigger phrases and measuring attack success versus clean accuracy.
+              trigger samples and measuring attack success against clean accuracy. [file:1]
             </p>
             <p>
-              Benchmarked defenses including data filtering, activation clustering, and fine-tuning, and presented
-              findings in an IEEE-style report.
+              Benchmarked defenses such as data filtering, activation clustering, and fine-tuning, and communicated
+              results in an IEEE-style report and presentation. [file:1]
             </p>
             <div class="tag-list">
               <span class="tag">Security</span>
               <span class="tag">NLP</span>
               <span class="tag">PyTorch</span>
             </div>
-            <!--
-            <div class="link-row">
-              <a href="YOUR_BACKDOOR_REPO_URL" target="_blank" rel="noreferrer">View code →</a>
-            </div>
-            -->
           </article>
 
           <article class="card">
@@ -271,11 +456,11 @@
             <span class="meta">AWS · Docker · Terraform</span>
             <p>
               Containerized application services with Docker and orchestrated workloads using Amazon ECS to improve
-              scalability, deployment speed, and uptime.
+              scalability, deployment speed, and uptime. [file:1]
             </p>
             <p>
               Implemented Infrastructure as Code with Terraform, architecting AWS EC2, RDS, and S3-based infrastructure
-              for a resilient e-commerce platform.
+              for a resilient e-commerce platform. [file:1]
             </p>
             <div class="tag-list">
               <span class="tag">AWS</span>
@@ -285,15 +470,15 @@
           </article>
 
           <article class="card">
-            <h4>Monitoring &amp; Reliability Work</h4>
+            <h4>Monitoring &amp; Reliability for ML Workloads</h4>
             <span class="meta">SageMaker · CloudWatch · Azure ML</span>
             <p>
-              Deployed and managed ML models on AWS SageMaker and Azure ML with 99.9% uptime, and built AI-driven
-              monitoring and anomaly detection using CloudWatch and custom models.
+              Deployed and managed ML models on AWS SageMaker and Azure ML with 99.9% uptime, while building
+              AI-driven monitoring and anomaly detection using CloudWatch and custom models. [file:1]
             </p>
             <p>
               Reduced incident response time by 35% and unplanned downtime by 40% through proactive observability and
-              infrastructure tuning.
+              infrastructure tuning. [file:1]
             </p>
             <div class="tag-list">
               <span class="tag">MLOps</span>
@@ -306,22 +491,28 @@
 
       <!-- Experience -->
       <section id="experience">
-        <h3>Experience</h3>
+        <header>
+          <div class="section-label">Experience</div>
+          <div class="section-title">Industry background</div>
+        </header>
         <article class="card">
           <h4>Software Engineer · Insight, India</h4>
           <span class="meta">Jul 2022 – Jul 2024</span>
-          <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.9rem; color:#d1d5db;">
+          <ul class="experience-list">
             <li>
-              Deployed and managed ML models on AWS SageMaker and Azure ML, enabling scalable AI workloads with 99.9% uptime.
+              Deployed and managed ML models on AWS SageMaker and Azure ML, enabling scalable AI workloads with 99.9% uptime. [file:1]
             </li>
             <li>
-              Implemented AI-driven monitoring and anomaly detection with CloudWatch and custom ML algorithms, reducing incident response time by 35%.
+              Implemented AI-driven monitoring and anomaly detection using CloudWatch and custom ML algorithms,
+              reducing incident response time by 35%. [file:1]
             </li>
             <li>
-              Integrated serverless AI inference pipelines using AWS Lambda and API Gateway, processing 50K+ predictions daily with sub-second latency.
+              Integrated serverless AI inference pipelines with AWS Lambda and API Gateway, processing 50K+ predictions
+              daily with sub-second latency. [file:1]
             </li>
             <li>
-              Architected backup and disaster recovery strategies that cut recovery time by 60% and increased successful restores by 50%.
+              Architected backup and disaster recovery strategies that cut recovery time by 60% and increased successful
+              restores by 50%. [file:1]
             </li>
           </ul>
         </article>
@@ -329,7 +520,10 @@
 
       <!-- Education -->
       <section id="education">
-        <h3>Education</h3>
+        <header>
+          <div class="section-label">Education</div>
+          <div class="section-title">Academic track</div>
+        </header>
         <div class="grid">
           <div class="card">
             <h4>Purdue University Northwest</h4>
@@ -337,30 +531,49 @@
           </div>
           <div class="card">
             <h4>SRM Institute of Technology and Science</h4>
-            <span class="meta">B.Tech Computer Science · CGPA 8.44/10</span>
+            <span class="meta">B.Tech Computer Science · CGPA 8.44/10</span> [file:1]
           </div>
         </div>
       </section>
 
       <!-- Skills -->
       <section id="skills">
-        <h3>Skills &amp; Certifications</h3>
+        <header>
+          <div class="section-label">Skills</div>
+          <div class="section-title">Tech stack &amp; credentials</div>
+        </header>
         <div class="card">
-          <p><strong>Languages</strong>: Python, JavaScript, Java, Julia</p>
-          <p><strong>Backend &amp; APIs</strong>: FastAPI, Flask, Node.js, Express.js</p>
-          <p><strong>Frontend</strong>: React</p>
-          <p><strong>ML &amp; AI</strong>: PyTorch, TensorFlow, Scikit-learn, Keras, LangChain, Azure OpenAI</p>
-          <p><strong>Cloud &amp; DevOps</strong>: AWS (SageMaker, Lambda, ECS, EC2, RDS, S3, CloudWatch), Azure ML, Docker, Kubernetes, Jenkins, CI/CD</p>
-          <p><strong>Data &amp; DB</strong>: SQLite, MySQL, PostgreSQL, MongoDB</p>
-          <p><strong>Other Tools</strong>: MLflow, Datadog, Vercel, cPanel, Git</p>
-          <p><strong>Certifications</strong>: Machine Learning Specialization (Stanford), Deep Learning &amp; NLP (DeepLearning.AI), Azure AI-900, Azure AZ-204</p>
+          <p><strong>Languages</strong>: Python, JavaScript, Java, Julia</p> [file:1]
+          <p><strong>Backend &amp; APIs</strong>: FastAPI, Flask, Node.js, Express.js</p> [file:1]
+          <p><strong>Frontend</strong>: React</p> [file:1]
+          <p><strong>ML &amp; AI</strong>: PyTorch, TensorFlow, Scikit-learn, Keras, LangChain, Azure OpenAI</p> [file:1]
+          <p><strong>Cloud &amp; DevOps</strong>: AWS (SageMaker, Lambda, ECS, EC2, RDS, S3, CloudWatch), Azure ML, Docker, Kubernetes, Jenkins, CI/CD</p> [file:1]
+          <p><strong>Data &amp; DB</strong>: SQLite, MySQL, PostgreSQL, MongoDB</p> [file:1]
+          <p><strong>Other Tools</strong>: MLflow, Datadog, Vercel, cPanel, Git</p> [file:1]
+          <p><strong>Certifications</strong>: Machine Learning Specialization (Stanford), Deep Learning &amp; NLP (DeepLearning.AI), Azure AI-900, Azure AZ-204</p> [file:1]
         </div>
       </section>
-    </div>
-  </main>
 
-  <footer>
-    © 2026 · Akansh Sharma · Built with HTML &amp; CSS
-  </footer>
+      <!-- Contact -->
+      <section id="contact">
+        <header>
+          <div class="section-label">Contact</div>
+          <div class="section-title">Say hello</div>
+        </header>
+        <div class="section-body">
+          The fastest way to reach Akansh is via email or LinkedIn. [file:1]
+        </div>
+        <div style="margin-top:0.9rem; font-size:0.9rem;">
+          📧 <a href="mailto:sharm995@pnw.edu">sharm995@pnw.edu</a><br />
+          🧑‍💻 <a href="https://github.com/akansh194" target="_blank" rel="noreferrer">github.com/akansh194</a><br />
+          🔗 <a href="https://linkedin.com/in/sharma-akansh" target="_blank" rel="noreferrer">linkedin.com/in/sharma-akansh</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 · Akansh Sharma · Built with HTML &amp; CSS
+    </footer>
+  </div>
 </body>
 </html>
